@@ -1,0 +1,54 @@
+# English translations for shuup-shipping-simulator.
+# Copyright (C) 2016 Rockho Team
+# This file is distributed under the same license as the
+# shuup-shipping-simulator project.
+# Christian Hess <chess@rockho.com.br>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: shuup-shipping-simulator 1.0.0\n"
+"POT-Creation-Date: 2016-07-14 09:14-0300\n"
+"PO-Revision-Date: 2016-07-14 09:15-0300\n"
+"Last-Translator: Christian Hess <chess@rockho.com.br>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: shuup_shipping_simulator/forms.py:16
+msgid "Postal code"
+msgstr ""
+
+#: shuup_shipping_simulator/plugins.py:24
+msgid "Product shipping methods simulator"
+msgstr ""
+
+#: shuup_shipping_simulator/plugins.py:27
+msgid "Title"
+msgstr ""
+
+#: shuup_shipping_simulator/views.py:80
+msgid "Product ID {0} not available in {1} shop"
+msgstr ""
+
+#: shuup_shipping_simulator/views.py:93
+#, python-format
+msgid "The quantity %f is not allowed. Please use an integer value."
+msgstr ""
+
+#: shuup_shipping_simulator/views.py:98
+msgid "The quantity is not valid: {0}"
+msgstr ""
+
+#: shuup_shipping_simulator/views.py:102
+#, python-format
+msgid "The quantity %s is not valid."
+msgstr ""
+
+#: shuup_shipping_simulator/views.py:133
+msgid "{0}-{1} days"
+msgstr ""
+
