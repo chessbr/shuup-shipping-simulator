@@ -1,5 +1,5 @@
 # Translations template for shuup-shipping-simulator.
-# Copyright (C) 2016 ORGANIZATION
+# Copyright (C) 2016 Rockho Team
 # This file is distributed under the same license as the
 # shuup-shipping-simulator project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
