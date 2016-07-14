@@ -1,0 +1,73 @@
+{% if form %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">{{ title }}</h2>
+    </div>
+
+    <div class="panel-body">
+        <form class="form-horizontal" id="simulate-shipping-form">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}" class="col-sm-3 control-label">{{ field.label }}</label>
+                <div class="col-sm-7">
+                    {{ field }}
+                </div>
+            </div>
+            {% endfor%}
+
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-10">
+                    <button class="btn btn-primary" type="button" onclick="simulateShipping();">
+                        <i class="fa fa-truck"></i> {% trans %}Calculate{% endtrans %}
+                    </button>
+                </div>
+            </div>
+
+            <div id="shipping-result"></div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function simulateShipping(){
+        $("#shipping-result").html('<div class="text-center text-large"><i class="fa fa-3x fa-spinner fa-spin"></i></div>');
+
+        var shippingForm = $("#simulate-shipping-form").serialize();
+        var productForm = $("form.add-to-basket").serialize();
+        var formData = shippingForm + "&" + productForm;
+
+        $.post("{{ url('shuup:simulate-product-shipping') }}", formData, function (data){
+            var html = "";
+
+            if(data && data.methods){
+                html = '<dl class="dl-horizontal">';
+                for(var method in data.methods){
+                    html += "<dt>" + data.methods[method].name + "</dt>";
+
+                    if(data.methods[method].cost && data.methods[method].cost > 0){
+                        html += "<dd>" + data.methods[method].formatted_cost;
+                    }else{
+                        html += "<dd>{% trans %}Free{% endtrans %}";
+                    }
+
+                    if(data.methods[method].time){
+                        html += ' - ' + data.methods[method].time.formatted;
+                    }
+
+                    html += "</dd>";
+                }
+                html += "</dl>";
+            }
+
+            $("#shipping-result").html(html);
+        })
+        .error(function (){
+            alert("{% trans %}Failed to simulate shipping.{% endtrans %}");
+            $("#shipping-result").html("");
+        });
+    }
+</script>
+{% endif %}
