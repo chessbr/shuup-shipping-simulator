@@ -6,6 +6,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -13,7 +14,7 @@ from django_countries import Countries
 
 
 class PostalCodeShippingSimulatorForm(forms.Form):
-    postal_code = forms.CharField(label=_(u"Postal code"), required=True)
+    postal_code = forms.CharField(label=_("Postal code"), required=True)
 
 
 class CityStateCountryShippingSimulatorForm(forms.Form):

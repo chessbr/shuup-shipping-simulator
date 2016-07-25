@@ -95,7 +95,7 @@ class ShippingSimulatorView(View):
 
                     quantity = int(quantity)
             except (ValueError, decimal.InvalidOperation) as e:
-                logger.exception(_("The quantity is not valid: {0}").format(str(e)))
+                logger.exception(_("The quantity is not valid: {0}").format(e))
                 return HttpResponseBadRequest()
 
             if quantity <= 0:
