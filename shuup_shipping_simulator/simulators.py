@@ -14,6 +14,8 @@ from shuup_shipping_simulator.forms import (
 
 from shuup.core.models import MutableAddress
 
+from django.conf import settings
+
 
 class ShippingSimulatorBase(object):
     """
@@ -46,7 +48,10 @@ class PostalCodeShippingSimulator(ShippingSimulatorBase):
         """
         Just return a MutableAddress with a postal code set
         """
-        return MutableAddress(postal_code=form.cleaned_data['postal_code'])
+
+        country = form.cleaned_data.get('country', settings.SHUUP_ADDRESS_HOME_COUNTRY)
+        return MutableAddress(postal_code=form.cleaned_data['postal_code'],
+                              country=country)
 
 
 class CityStateCountryShippingSimulator(ShippingSimulatorBase):
