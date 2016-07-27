@@ -25,38 +25,95 @@ from django.views.generic.base import View
 logger = logging.getLogger(__name__)
 
 
-class ShippingSimulatorView(View):
+def get_shipping_methods_from(basket):
+    """
+    :type: source shuup.front.basket.objects:BaseBasket
+    :rtype: list of dict
+
+    Calculates and returns a list of dicts containing
+    the available methods from source in the format:
+        [
+            {
+                "name": "Method name #1",
+                "price": 3.41,
+                "formatted_price": "U$ 3.41",
+                "time_days":{
+                    "min": 1,
+                    "max": 3
+                }
+            },
+            {
+                "name": "Method name #2",
+                "price": 19.2,
+                "formatted_price": "U$ 19.20",
+            },
+            {
+                "name": "Method name #3",
+                "price": 0.0,
+                "formatted_price": "U$ 0.00",
+                "time_days":{
+                    "min": 5
+                }
+            },
+            ...
+        ]
+    """
+
+    methods = []
+
+    # iterate over all available methods and calculates the price and delivery time
+    for m in basket.get_available_shipping_methods():
+        cost = m.get_total_cost(basket)
+        time = m.get_shipping_time(basket)
+
+        method = {
+            'name': m.get_effective_name(basket),
+            'formatted_cost': format_money(cost.price, digits=2),
+            'cost': float(cost.price.value),
+        }
+
+        # some methods just return None, others doesnt have a max_duration
+        if time:
+            if time.max_duration and time.max_duration > time.min_duration:
+                method['time'] = {
+                    "min": time.min_duration.days,
+                    "max": time.max_duration.days,
+                    "formatted": _("{0}-{1} days").format(time.min_duration.days,
+                                                          time.max_duration.days)
+                }
+            else:
+                method['time'] = {
+                    "min": time.min_duration.days,
+                    "formatted": ungettext("{0} day", "{0} days",
+                                           time.min_duration.days).format(time.min_duration.days)
+                }
+
+        methods.append(method)
+
+    return methods
+
+
+class BasketShippingSimulatorView(View):
 
     def post(self, request, **kwargs):
         """
-        Calculates and returns a JSON object containing a
-        list of available methods in the format:
-            [
-                {
-                    "name": "Method name #1",
-                    "price": 3.41,
-                    "formatted_price": "U$ 3.41",
-                    "time_days":{
-                        "min": 1,
-                        "max": 3
-                    }
-                },
-                {
-                    "name": "Method name #2",
-                    "price": 19.2,
-                    "formatted_price": "U$ 19.20",
-                },
-                {
-                    "name": "Method name #3",
-                    "price": 0.0,
-                    "formatted_price": "U$ 0.00",
-                    "time_days":{
-                        "min": 5
-                    }
-                },
-                ...
-            ]
+        Use the basket from session
+        """
+        methods = []
+        shipping_simulator = cached_load("SHIPPING_SIMULATOR_CLASS_SPEC")()
+        shipping_form = shipping_simulator.get_form(data=request.POST)
 
+        if shipping_form.is_valid():
+            request.basket.shipping_address = shipping_simulator.get_shipping_address(shipping_form)
+            methods = get_shipping_methods_from(request.basket)
+
+        return JsonResponse({"methods": methods})
+
+
+class ProductShippingSimulatorView(View):
+
+    def post(self, request, **kwargs):
+        """
         A temporary basket is created and the product with quantity
         is added to it. Then the shipping methods can be calculated normally
         """
@@ -111,37 +168,7 @@ class ShippingSimulatorView(View):
             }
 
             tmp_basket.add_product(**add_product_kwargs)
-            methods = []
-
-            # iterate over all available methods and calculates the price and delivery time
-            for m in tmp_basket.get_available_shipping_methods():
-                cost = m.get_total_cost(tmp_basket)
-                time = m.get_shipping_time(tmp_basket)
-
-                method = {
-                    'name': m.get_effective_name(tmp_basket),
-                    'formatted_cost': format_money(cost.price, digits=2),
-                    'cost': float(cost.price.value),
-                }
-
-                # some methods just return None, others doesnt have a max_duration
-                if time:
-                    if time.max_duration and time.max_duration > time.min_duration:
-                        method['time'] = {
-                            "min": time.min_duration.days,
-                            "max": time.max_duration.days,
-                            "formatted": _("{0}-{1} days").format(time.min_duration.days,
-                                                                  time.max_duration.days)
-                        }
-                    else:
-                        method['time'] = {
-                            "min": time.min_duration.days,
-                            "formatted": ungettext("{0} day", "{0} days",
-                                                   time.min_duration.days).format(time.min_duration.days)
-                        }
-
-                methods.append(method)
-
+            methods = get_shipping_methods_from(tmp_basket)
             return JsonResponse({"methods": methods})
 
         return JsonResponse({})

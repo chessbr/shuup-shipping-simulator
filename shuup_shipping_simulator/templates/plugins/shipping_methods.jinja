@@ -39,7 +39,11 @@
         var productForm = $("form.add-to-basket").serialize();
         var formData = shippingForm + "&" + productForm;
 
+        {% if from_session %}
+        $.post("{{ url('shuup:simulate-basket-shipping') }}", formData, function (data){
+        {% else %}
         $.post("{{ url('shuup:simulate-product-shipping') }}", formData, function (data){
+        {% endif %}
             var html = "";
 
             if(data && data.methods){
