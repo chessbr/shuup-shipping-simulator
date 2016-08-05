@@ -34,6 +34,11 @@ class ShippingSimulatorPlugin(TemplatedPlugin):
             try:
                 resolved = resolve(context["request"].path)
                 is_valid = (resolved.view_name in ("shuup:product", "shuup:basket"))
+
+                # at least one product in basket
+                if resolved.view_name == "shuup:basket":
+                    is_valid = len(context["request"].basket.product_ids) > 0
+
             except Resolver404:
                 is_valid = False
 
@@ -47,6 +52,6 @@ class ShippingSimulatorPlugin(TemplatedPlugin):
         if resolved.view_name in ("shuup:product", "shuup:basket"):
             context_data["title"] = self.get_translated_value("title")
             context_data["form"] = cached_load("SHIPPING_SIMULATOR_CLASS_SPEC")().get_form()
-            context_data["from_session"] = (resolved.view_name == "shuup:basket") 
+            context_data["from_session"] = (resolved.view_name == "shuup:basket")
 
         return context_data
