@@ -7,7 +7,7 @@
 
     <div class="panel-body">
         <form class="form-horizontal" id="simulate-shipping-form">
-            {{ csrf_token }}
+            {% csrf_token %}
 
             {% for field in form %}
             <div class="form-group">

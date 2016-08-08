@@ -6,8 +6,6 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-
-from babel.messages import frontend as babel
 import setuptools
 
 NAME = 'shuup-shipping-simulator'
@@ -37,15 +35,5 @@ if __name__ == '__main__':
         packages=["shuup_shipping_simulator"],
         include_package_data=True,
         install_requires=REQUIRES,
-        entry_points={"shuup.addon": "shuup_shipping_simulator=shuup_shipping_simulator"},
-        cmdclass={'compile_catalog': babel.compile_catalog,
-                  'extract_messages': babel.extract_messages,
-                  'init_catalog': babel.init_catalog,
-                  'update_catalog': babel.update_catalog},
-        message_extractors={
-            'shuup_shipping_simulator': [
-                ('**.py', 'python', {'silent':"false"}),
-                ('**/templates/**.jinja', 'jinja2', {'silent':"false"})
-            ],
-        }
+        entry_points={"shuup.addon": "shuup_shipping_simulator=shuup_shipping_simulator"}
     )
