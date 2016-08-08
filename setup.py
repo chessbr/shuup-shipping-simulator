@@ -44,9 +44,8 @@ if __name__ == '__main__':
                   'update_catalog': babel.update_catalog},
         message_extractors={
             'shuup_shipping_simulator': [
-                ('**.py', 'python', None),
-                ('**/templates/**.html', 'jinja2', None),
-                ('**/templates/**.jinja', 'jinja2', None)
+                ('**.py', 'python', {'silent':"false"}),
+                ('**/templates/**.jinja', 'jinja2', {'silent':"false"})
             ],
         }
     )
