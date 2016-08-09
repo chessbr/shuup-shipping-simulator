@@ -46,7 +46,7 @@
         {% endif %}
             var html = "";
 
-            if(data && data.methods){
+            if(data && data.methods && data.methods.length > 0){
                 html = '<dl class="dl-horizontal">';
                 for(var method in data.methods){
                     html += "<dt>" + data.methods[method].name + "</dt>";
@@ -64,6 +64,8 @@
                     html += "</dd>";
                 }
                 html += "</dl>";
+            }else{
+                html = '<span>{% trans %}No shipping method available.{% endtrans %}</span>';
             }
 
             $("#shipping-result").html(html);

@@ -7,52 +7,69 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+#: forms.py:17
 msgid "Postal code"
 msgstr "CEP"
 
+#: plugins.py:24
 msgid "Shipping methods simulator"
 msgstr "Simular frete"
 
+#: plugins.py:27
 msgid "Title"
 msgstr "Título"
 
+#: templates/plugins/shipping_methods.jinja:24
 msgid "Calculate"
 msgstr "Calcular"
 
+#: templates/plugins/shipping_methods.jinja:57
 msgid "Free"
 msgstr "Grátis"
 
+#: templates/plugins/shipping_methods.jinja:68
+msgid "No shipping method available."
+msgstr "Frete indisponível para a região informada."
+
+#: templates/plugins/shipping_methods.jinja:74
 msgid "Failed to simulate shipping."
 msgstr "Falha ao simular frete"
 
+#: views.py:81
 #, python-brace-format
 msgid "{0}-{1} days"
 msgstr "{0}-{1} dias"
 
+#: views.py:87
 #, python-brace-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} dia"
 msgstr[1] "{0} dias"
 
+#: views.py:137
 #, python-brace-format
 msgid "Product ID {0} not available in {1} shop"
 msgstr "Produto ID {0} não disponível na loja {1}"
 
+#: views.py:150
 #, python-format
 msgid "The quantity %f is not allowed. Please use an integer value."
 msgstr "A quantidade %f não é permitida. Use inteiros."
 
+#: views.py:155
 #, python-brace-format
 msgid "The quantity is not valid: {0}"
 msgstr "A quantidade não é válida: {0}"
 
+#: views.py:159
 #, python-format
 msgid "The quantity %s is not valid."
 msgstr "A quantidade %s não é válida."
