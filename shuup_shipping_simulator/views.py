@@ -93,7 +93,7 @@ def get_shipping_methods_from(basket):
 
         methods.append(method)
 
-    return methods
+    return sorted(methods, key=lambda x:x['cost'])
 
 
 class BasketShippingSimulatorView(View):
