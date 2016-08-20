@@ -35,6 +35,7 @@ def get_shipping_methods_from(basket):
         [
             {
                 "name": "Method name #1",
+                "description": "beautiful",
                 "price": 3.41,
                 "formatted_price": "U$ 3.41",
                 "time_days":{
@@ -49,6 +50,7 @@ def get_shipping_methods_from(basket):
             },
             {
                 "name": "Method name #3",
+                "description": "nice shipping",
                 "price": 0.0,
                 "formatted_price": "U$ 0.00",
                 "time_days":{
@@ -70,6 +72,7 @@ def get_shipping_methods_from(basket):
             'name': m.get_effective_name(basket),
             'formatted_cost': format_money(cost.price, digits=2),
             'cost': float(cost.price.value),
+            'description': m.description
         }
 
         # some methods just return None, others doesnt have a max_duration

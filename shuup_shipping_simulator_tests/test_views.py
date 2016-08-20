@@ -44,7 +44,8 @@ def test_postalcodeshipping(class_spec):
         service = carrier.create_service(None, enabled=True,
                                shop=get_default_shop(),
                                tax_class=get_default_tax_class(),
-                               name="A Kustom Cervise")
+                               name="A Kustom Cervise",
+                               description="Nice!")
 
         path = reverse("shuup:simulate-product-shipping")
         client = Client()
@@ -69,6 +70,7 @@ def test_postalcodeshipping(class_spec):
         json_response = json.loads(response.content.decode("utf-8"))
         method = json_response["methods"][0]
         assert method["name"] == service.name
+        assert method["description"] == service.description
         assert method["cost"] == cost.value
         assert method["formatted_cost"] == format_money(cost)
         assert method.get("time") is None
@@ -86,6 +88,7 @@ def test_postalcodeshipping(class_spec):
                 method = json_response["methods"][0]
 
                 assert method["name"] == service.name
+                assert method["description"] == service.description
                 assert method["cost"] == cost.value
                 assert method["formatted_cost"] == format_money(cost)
                 assert method["time"]["min"] == duration.min_duration.days
@@ -103,6 +106,7 @@ def test_postalcodeshipping(class_spec):
                 method = json_response["methods"][0]
 
                 assert method["name"] == service.name
+                assert method["description"] == service.description
                 assert method["cost"] == cost.value
                 assert method["formatted_cost"] == format_money(cost)
 
