@@ -126,3 +126,18 @@ MIDDLEWARE_CLASSES = [
     'shuup.front.middleware.ProblemMiddleware',
     'shuup.front.middleware.ShuupFrontMiddleware',
 ]
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('fi', 'Finnish'),
+    ('ja', 'Japanese'),
+    ('zh-hans', 'Simplified Chinese'),
+    ('pt-br', 'Portuguese (Brazil)'),
+]
+PARLER_DEFAULT_LANGUAGE_CODE = 'en'
+PARLER_LANGUAGES = {
+    None: [{"code": c, "name": n} for (c, n) in LANGUAGES],
+    'default': {
+        'hide_untranslated': False,
+    }
+}
