@@ -16,7 +16,7 @@ Inside the `ShippingSimulatorView` a temporary Basket is created with the `Mutab
 The plugin receives the JSON response and present to the customer, simply as that.
 
 ## Compatibility
-* Shuup v0.4.0
+* Shuup v0.5.0
 * [Tested on Python 2.7, 3.4 and 3.5](https://travis-ci.org/rockho-team/shuup-shipping-simulator)
 
 ## Usage
@@ -44,5 +44,5 @@ Copyright (C) 2016 by [Rockho Team](https://github.com/rockho-team)
 License
 -------
 
-Shuup Boleto is published under the GNU Affero General Public License,
+Shuup Shipping Simulator is published under the GNU Affero General Public License,
 version 3 (AGPLv3) (see the [LICENSE](LICENSE) file).
